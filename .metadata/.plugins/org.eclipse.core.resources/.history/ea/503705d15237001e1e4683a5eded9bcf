@@ -1,0 +1,18 @@
+
+#ifndef INC_FUEL_GAUGE_H_
+#define INC_FUEL_GAUGE_H_
+
+#include "initialise.h"
+
+void get_bat_report(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_level(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_voltage(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_current(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_SOC(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_remaining_capacity(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_full_capacity(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_temperature(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_time_to_empty(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+void get_bat_time_to_full(I2C_Handle_t *pI2CHandle, BatteryReport *batReport);
+
+#endif /* INC_FUEL_GAUGE_H_ */

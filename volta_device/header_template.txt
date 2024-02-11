@@ -1,0 +1,12 @@
+/*
+ * Version: {version}
+ * Workflow version: {workflow_version}
+ *
+ * file: {filename}
+ *
+ * Created on: {created_date}
+ * Author: {author}
+ * Company: {company}
+ * Project: {project}
+ */
+

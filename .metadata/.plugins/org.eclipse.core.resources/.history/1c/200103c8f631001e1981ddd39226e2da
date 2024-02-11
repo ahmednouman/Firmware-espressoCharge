@@ -1,0 +1,226 @@
+#include <stdio.h>
+#include "initialise.h"
+#include "FreeRTOS.h"
+#include "task.h"
+
+uint32_t SystemCoreClock = 8000000;
+
+void host_comms(void* parameters);
+void device_task(void* parameters);
+void UFP_task(void* parameters);
+
+BatteryReport pbatReport;
+
+static rxCmplt = RESET;
+static uint8_t serialDataHead, dataCount = 0;
+
+char msg[MSG_SIZE] = {0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x02, 0x00, 0x00, 0x05, 0x0, 0x03};
+char rx_buf[32];
+uint8_t rcv_len = 1;
+uint8_t lenByte;
+
+int main(void)
+{
+ 	IO_Init();
+	I2c_Init();
+	USART1_Init();
+	pd_interrupt_clear_all(&I2C1Handle);
+	pd_interrupt_mask(&I2C1Handle);
+	Knock_Interrupt_Init();
+	PD_Interrupt_Init();
+	chg_setup_charge_power(&I2C1Handle);
+
+//	get_bat_level(&I2C1Handle, &pbatReport);
+
+	pd_swap_to_UFP(&I2C1Handle);
+
+	plugAction = pd_get_plug_detect(&I2C1Handle);
+	if(plugAction == PD_PLUG_CONNECTED){
+		power_direction = pd_get_power_direction(&I2C1Handle);
+	}
+
+ 	TaskHandle_t hostComms_handle;
+    TaskHandle_t deviceTask_handle;
+
+ 	BaseType_t status;
+
+ 	status = xTaskCreate(host_comms, "Host_Comms", 120, NULL, 2, &hostComms_handle);
+    configASSERT(status == pdPASS);
+
+ 	status = xTaskCreate(device_task, "Device_Task", 20, NULL, 2, &deviceTask_handle);
+    configASSERT(status == pdPASS);
+
+     vTaskStartScheduler();
+
+	while(1)
+	{
+	}
+
+    return 0;
+}
+
+void host_comms(void* parameters)
+{
+	uint8_t temp, temp2;
+    while ( USART_ReceiveDataIT(&usart1_handle, &rx_buf[0], rcv_len) != USART_READY );
+	while(1)
+	{
+		if(rxCmplt == SET)
+		{
+			rxCmplt = RESET;
+			serialDataHead = rx_buf[0];
+			dataCount++;
+			while(1)
+			{
+				USART_ReceiveData(&usart1_handle, &rx_buf[dataCount], serialDataHead);
+				if(rx_buf[serialDataHead  + dataCount - 1] != 0){
+					dataCount = dataCount + serialDataHead;
+					serialDataHead = rx_buf[dataCount - 1];
+					rx_buf[dataCount - 1] = 0x00;
+				}else
+				{
+					dataCount = 0;
+					break;
+				}
+			}
+			delay(11);
+			msg[1] = 0x4;
+			msg[2] = FW_VERSION & 0xFF;
+			msg[3] = (FW_VERSION >> 8) & 0xFF;
+			msg[4] = (FW_VERSION >> 16) & 0xFF;
+			msg[5] = (FW_VERSION >> 24) & 0xFF;
+			msg[6] = 0x03;
+			temp = 7;
+			temp2 = 0;
+			encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+			while(temp > 0){
+				while( USART_SendDataIT(&usart1_handle, &msg[temp2], 1) != USART_READY);
+				delay(100000);
+				temp--;
+				temp2++;
+			}
+
+		}
+//		{
+//			while ( USART_ReceiveDataIT(&usart1_handle, rx_buf, rcv_len) != USART_READY );
+//			if(rx_buf[0] == 0x02 && rx_buf[4] == 0x03)
+//			{
+//				if(rx_buf[1] == 0xF3){
+//					if(rx_buf[2] == 0x00){
+//						get_bat_report(&I2C1Handle, &pbatReport);
+//						msg[2] = pbatReport.bat_level;
+//						msg[4] = pbatReport.volt[0];
+//						msg[5] = pbatReport.volt[1];
+//						msg[7] = pbatReport.current[0];
+//						msg[8] = pbatReport.current[1];
+//						msg[10] = power_direction;
+//						delay(500000);
+//						while( USART_SendDataIT(&usart1_handle, msg, 12) != USART_READY);
+//					}else if(rx_buf[2] == 0x01){
+//						msg[1] = 0x4;
+//						msg[2] = FW_VERSION & 0xFF;
+//						msg[3] = (FW_VERSION >> 8) & 0xFF;
+//						msg[4] = (FW_VERSION >> 16) & 0xFF;
+//						msg[5] = (FW_VERSION >> 24) & 0xFF;
+//						msg[6] = 0x03;
+//						while( USART_SendDataIT(&usart1_handle, msg, 7) != USART_READY);
+//					}
+//				}else if(rx_buf[1] == 0xF2){
+//					if(rx_buf[2] == 0x38){
+//						if(rx_buf[3] == 0x01){
+//							pd_swap_to_sink(&I2C1Handle);
+//							power_direction = pd_get_power_direction(&I2C1Handle);
+//						}else if(rx_buf[3] == 0x02){
+//							pd_swap_to_source(&I2C1Handle);
+//							vTaskDelay(pdMS_TO_TICKS(1000));
+//							pd_swap_to_UFP(&I2C1Handle);
+//							power_direction = pd_get_power_direction(&I2C1Handle);
+//						}
+//					}
+//				}
+//				else if(rx_buf[1] == 0xF0){
+//					if(rx_buf[2] == 0x77){
+//						//mcu f/w update
+//					}else if(rx_buf[2] == 0x57){
+//						//pd f/w update
+//					}
+//				}
+//				rxCmplt = RESET;
+//			}
+//		}
+
+		vTaskDelay(pdMS_TO_TICKS(1000));
+		taskYIELD();
+	}
+}
+
+void device_task(void* parameters)
+{
+	uint8_t power_dir, plug;
+	while(1)
+	{
+		if(plugAction == PD_PLUG_CONNECTED){
+			if(power_direction == SOURCING)
+			{
+				ledOnOff(LED0, ON);
+				ledOnOff(LED1, ON);
+				ledOnOff(LED2, OFF);
+			}else if (power_direction == SINKING)
+			{
+				ledOnOff(LED0, ON);
+				ledOnOff(LED1, ON);
+				setLED(LED2);
+			}
+		}else
+		{
+			ledOnOff(LED0, OFF);
+		    ledOnOff(LED1, OFF);
+		    ledOnOff(LED2, OFF);
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(1000));
+		taskYIELD();
+	}
+}
+
+void EXTI4_15_IRQHandler(void)
+{
+    uint8_t pd_val, knock_val;
+    pd_val = GPIO_ReadFromInputPin(GPIOA, PD_INTERRUPT);
+    knock_val = GPIO_ReadFromInputPin(GPIOA, KNOCK_INTERRUPT);
+    delay(100000);
+    if(pd_val == 0)
+    {
+    	GPIO_IRQHandling(PD_INTERRUPT);
+    	pd_IRQHandling(&I2C1Handle);
+    }
+    if(knock_val == 1)
+    {
+    	GPIO_IRQHandling(KNOCK_INTERRUPT);
+    	knock_IRQHandling();
+    }
+}
+
+void I2C1_IRQHandler(void)
+{
+	I2C_EV_IRQHandling(&I2C1Handle);
+}
+
+void USART1_IRQHandler(void)
+{
+	USART_IRQHandling(&usart1_handle);
+}
+
+void USART_ApplicationEventCallback( USART_Handle_t *pUSARTHandle,uint8_t ApEv)
+{
+   if(ApEv == USART_EVENT_RX_CMPLT)
+   {
+       rxCmplt = SET;
+
+   }else if (ApEv == USART_EVENT_TX_CMPLT)
+   {
+
+   }
+}
+
+

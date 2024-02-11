@@ -1,0 +1,36 @@
+#include "CHGBQ25731.h"
+
+
+void chrg_write_command(I2C_Handle_t *pI2CHandle, uint8_t reg_addr, uint8_t *data, uint8_t size);
+
+void chrg_write_command(I2C_Handle_t *pI2CHandle, uint8_t reg_addr, uint8_t *data, uint8_t size)
+{
+
+	uint8_t m[4];
+	m[0] = 0x02;
+	m[1] = 0x80;
+	m[2] = 0x03;
+	m[3] = 0x00;
+    while(I2C_MasterSendDataIT(pI2CHandle, &m[0], 4 , CHG_SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
+    delay(200000);
+}
+
+
+void chg_setup_charge_power(I2C_Handle_t *pI2CHandle)
+{
+//	delay(200000);
+//	uint8_t data[8] = { 0x02, 0x80, 0x03, 0x00, 0x04, 0x00, 0x05, 0x52};
+	uint8_t data[2] = {0};
+	data[0] = 0x02;
+	data[1] = 0x80;
+
+	chrg_write_command(pI2CHandle, 0,  &data[0], 2);
+//	while(I2C_MasterSendDataIT(pI2CHandle, &data[0], 2 , CHG_SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
+//	delay(200000);
+//	while(I2C_MasterSendDataIT(pI2CHandle, &data[0], 2 , CHG_SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
+////	delay(200000);
+//	while(I2C_MasterSendDataIT(pI2CHandle, &data[0], 2 , CHG_SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
+////	delay(200000);
+//	while(I2C_MasterSendDataIT(pI2CHandle, &data[0], 2 , CHG_SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
+//	delay(200000);
+}

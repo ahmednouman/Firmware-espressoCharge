@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 13 resources" deleteContents="false" description="Delete 13 resources" element1="/volta_device/Src/gpio_input_toggle.c" element10="/volta_device/Src/syscalls.c" element11="/volta_device/Src/sysmem.c" element12="/volta_device/Src/uart_case.c" element13="/volta_device/Src/uart_tx.c" element2="/volta_device/Src/gpio_interrupt_toggle.c" element3="/volta_device/Src/gpio_toggle.c" element4="/volta_device/Src/i2c_master_rx_testing.c" element5="/volta_device/Src/i2c_master_rx_testingIT.c" element6="/volta_device/Src/i2c_master_tx_testing.c" element7="/volta_device/Src/middleware_testing.c" element8="/volta_device/Src/rtos_led_test.c" element9="/volta_device/Src/semihosting_test.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="13" stamp="1691129475696"/>
+</session>

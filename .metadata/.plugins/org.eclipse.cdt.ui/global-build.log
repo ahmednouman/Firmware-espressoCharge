@@ -1,0 +1,546 @@
+14:51:50 **** Incremental Build of configuration Debug for project volta_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Src/app.c" -mcpu=cortex-m0 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F0 -DSTM32F030F4Px -c -I../Inc -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/ThirdParty/FreeRTOS/include" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/ThirdParty/FreeRTOS/portable/GCC/ARM_CM0" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/ThirdParty/FreeRTOS/portable/MemMang" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/ThirdParty/FreeRTOS" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/Inc" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc" -I"C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/thirdPartyDrivers/inc" -Og -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/app.d" -MT"Src/app.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Src/app.o"
+../Src/app.c: In function 'host_comms':
+../Src/app.c:138:5: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+  138 |     while (USART_ReceiveDataIT(&usart1_handle, &rx_buf[0], rcv_len) != USART_READY );
+      |     ^~~~~
+../Src/app.c:139:2: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+  139 |  while(1)
+      |  ^~~~~
+../Src/app.c: In function 'process_command':
+../Src/app.c:236:14: warning: passing argument 1 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  236 |   encodeData(&msg[0], 4, &encMsg[0], &encDataLen);
+      |              ^~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:26: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                 ~~~~~~~~~^~~~
+../Src/app.c:236:26: warning: passing argument 3 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  236 |   encodeData(&msg[0], 4, &encMsg[0], &encDataLen);
+      |                          ^~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:54: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                             ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:236:38: warning: passing argument 4 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  236 |   encodeData(&msg[0], 4, &encMsg[0], &encDataLen);
+      |                                      ^~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:77: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                                                    ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:265:14: warning: passing argument 1 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  265 |   encodeData(&msg[0], 17, &encMsg[0], &encDataLen);
+      |              ^~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:26: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                 ~~~~~~~~~^~~~
+../Src/app.c:265:27: warning: passing argument 3 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  265 |   encodeData(&msg[0], 17, &encMsg[0], &encDataLen);
+      |                           ^~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:54: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                             ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:265:39: warning: passing argument 4 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  265 |   encodeData(&msg[0], 17, &encMsg[0], &encDataLen);
+      |                                       ^~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:77: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                                                    ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:279:14: warning: passing argument 1 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  279 |   encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+      |              ^~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:26: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                 ~~~~~~~~~^~~~
+../Src/app.c:279:26: warning: passing argument 3 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  279 |   encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+      |                          ^~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:54: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                             ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:279:38: warning: passing argument 4 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  279 |   encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+      |                                      ^~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:77: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                                                    ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:286:57: warning: passing argument 4 of 'read_i2c_generic' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  286 |   read_i2c_generic(&I2C1Handle, cmd_buf[3], cmd_buf[4], &msg[0], temp_len);
+      |                                                         ^~~~~~~
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:47:97: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   47 | void read_i2c_generic(I2C_Handle_t *pI2CHandle, uint8_t device_addr, uint8_t reg_addr, uint8_t *buf, uint8_t len);
+      |                                                                                        ~~~~~~~~~^~~
+../Src/app.c:287:14: warning: passing argument 1 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  287 |   encodeData(&msg[0], temp_len, &encMsg[0], &encDataLen);
+      |              ^~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:26: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                 ~~~~~~~~~^~~~
+../Src/app.c:287:33: warning: passing argument 3 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  287 |   encodeData(&msg[0], temp_len, &encMsg[0], &encDataLen);
+      |                                 ^~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:54: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                             ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:287:45: warning: passing argument 4 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  287 |   encodeData(&msg[0], temp_len, &encMsg[0], &encDataLen);
+      |                                             ^~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:77: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                                                    ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:282:42: warning: unused variable 'temp_reg_addr' [-Wunused-variable]
+  282 |   uint8_t temp_device_addr = cmd_buf[3], temp_reg_addr = cmd_buf[4], temp_len = cmd_buf[5];
+      |                                          ^~~~~~~~~~~~~
+../Src/app.c:282:11: warning: unused variable 'temp_device_addr' [-Wunused-variable]
+  282 |   uint8_t temp_device_addr = cmd_buf[3], temp_reg_addr = cmd_buf[4], temp_len = cmd_buf[5];
+      |           ^~~~~~~~~~~~~~~~
+../Src/app.c:294:14: warning: passing argument 1 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  294 |   encodeData(&msg[0], 1, &encMsg[0], &encDataLen);
+      |              ^~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:26: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                 ~~~~~~~~~^~~~
+../Src/app.c:294:26: warning: passing argument 3 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  294 |   encodeData(&msg[0], 1, &encMsg[0], &encDataLen);
+      |                          ^~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:54: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                             ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:294:38: warning: passing argument 4 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  294 |   encodeData(&msg[0], 1, &encMsg[0], &encDataLen);
+      |                                      ^~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:77: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                                                    ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:206:16: warning: unused variable 'temp2' [-Wunused-variable]
+  206 |  uint8_t temp, temp2;
+      |                ^~~~~
+../Src/app.c:206:10: warning: unused variable 'temp' [-Wunused-variable]
+  206 |  uint8_t temp, temp2;
+      |          ^~~~
+../Src/app.c: In function 'send_ok_msg':
+../Src/app.c:359:13: warning: passing argument 1 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  359 |  encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+      |             ^~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:26: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                 ~~~~~~~~~^~~~
+../Src/app.c:359:25: warning: passing argument 3 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  359 |  encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+      |                         ^~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:54: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                             ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:359:37: warning: passing argument 4 of 'encodeData' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  359 |  encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+      |                                     ^~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:13,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/generic_api.h:27:77: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   27 | void encodeData(uint8_t* data, uint8_t len, uint8_t* encoded_data, uint8_t* encoded_len);
+      |                                                                    ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:363:46: warning: passing argument 2 of 'USART_SendDataIT' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  363 |      while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+      |                                              ^~~~~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:11,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/stm32f030x4_usart_driver.h:86:64: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   86 | uint8_t USART_SendDataIT(USART_Handle_t *pUSARTHandle,uint8_t *pTxBuffer, uint32_t Len);
+      |                                                       ~~~~~~~~~^~~~~~~~~
+../Src/app.c:363:6: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+  363 |      while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+      |      ^~~~~
+../Src/app.c:364:3: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+  364 |   temp--;
+      |   ^~~~
+../Src/app.c: In function 'respond_to_host':
+../Src/app.c:375:46: warning: passing argument 2 of 'USART_SendDataIT' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  375 |      while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+      |                                              ^~~~~~~~~~~~~~
+In file included from C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:11,
+                 from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/drivers/inc/stm32f030x4_usart_driver.h:86:64: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'volatile uint8_t *' {aka 'volatile unsigned char *'}
+   86 | uint8_t USART_SendDataIT(USART_Handle_t *pUSARTHandle,uint8_t *pTxBuffer, uint32_t Len);
+      |                                                       ~~~~~~~~~^~~~~~~~~
+../Src/app.c:375:6: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+  375 |      while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+      |      ^~~~~
+../Src/app.c:376:3: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+  376 |   temp--;
+      |   ^~~~
+../Src/app.c: In function 'device_task':
+../Src/app.c:399:30: warning: passing argument 4 of 'led_blink' from incompatible pointer type [-Wincompatible-pointer-types]
+  399 |    led_blink(LED3, 8, 50000, &current_brightness);
+      |                              ^~~~~~~~~~~~~~~~~~~
+      |                              |
+      |                              uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:38:78: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   38 | void led_blink(uint8_t led, uint8_t cycle_num, uint32_t wait_time, uint16_t *brightness);
+      |                                                                    ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:432:83: warning: passing argument 5 of 'led_logic_handler' from incompatible pointer type [-Wincompatible-pointer-types]
+  432 |      led_to_glow = led_logic_handler(bat_soc, plugAction, power_direction, false, &leds_to_control);
+      |                                                                                   ^~~~~~~~~~~~~~~~
+      |                                                                                   |
+      |                                                                                   uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:33:113: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   33 | uint8_t led_logic_handler(uint8_t battery_soc, uint8_t plug_action, uint8_t pwr_direction, bool knock, uint8_t* active_leds);
+      |                                                                                                        ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:434:20: warning: passing argument 1 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  434 |      brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                    ^~~~~
+      |                    |
+      |                    uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:29: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                    ~~~~~~~~~^~~~
+../Src/app.c:434:27: warning: passing argument 2 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  434 |      brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                           ^~~~~~~~~~~~~~~~
+      |                           |
+      |                           uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:44: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                                   ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:434:45: warning: passing argument 3 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  434 |      brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                                             ^~~~~~~~~~~~~~~~~~~
+      |                                             |
+      |                                             uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:67: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                                                         ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:463:28: warning: passing argument 2 of 'dim_led' from incompatible pointer type [-Wincompatible-pointer-types]
+  463 |       dim_led(led_to_glow, &current_brightness);
+      |                            ^~~~~~~~~~~~~~~~~~~
+      |                            |
+      |                            uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:34:46: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   34 | uint16_t dim_led(uint8_t ledToGlow, uint16_t brightness[]);
+      |                                     ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:465:33: warning: passing argument 2 of 'brighten_led' from incompatible pointer type [-Wincompatible-pointer-types]
+  465 |       brighten_led(led_to_glow, &current_brightness);
+      |                                 ^~~~~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:35:51: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   35 | uint16_t brighten_led(uint8_t ledToGlow, uint16_t brightness[]);
+      |                                          ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:475:21: warning: passing argument 1 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  475 |       brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                     ^~~~~
+      |                     |
+      |                     uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:29: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                    ~~~~~~~~~^~~~
+../Src/app.c:475:28: warning: passing argument 2 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  475 |       brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                            ^~~~~~~~~~~~~~~~
+      |                            |
+      |                            uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:44: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                                   ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:475:46: warning: passing argument 3 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  475 |       brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                                              ^~~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:67: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                                                         ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:476:16: warning: passing argument 1 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  476 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                ^~~~~
+      |                |
+      |                uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |               ~~~~~~~~^~~~~~
+../Src/app.c:476:23: warning: passing argument 2 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  476 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                       ^~~~~~~~~~~~~~~~
+      |                       |
+      |                       uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:39: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                               ~~~~~~~~^~~~~~~~~~~~~
+../Src/app.c:476:41: warning: passing argument 3 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  476 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                                         ^~~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:63: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                                                      ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:477:34: warning: passing argument 4 of 'led_blink' from incompatible pointer type [-Wincompatible-pointer-types]
+  477 |       led_blink(LED1, 3, 150000, &current_brightness);
+      |                                  ^~~~~~~~~~~~~~~~~~~
+      |                                  |
+      |                                  uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:38:78: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   38 | void led_blink(uint8_t led, uint8_t cycle_num, uint32_t wait_time, uint16_t *brightness);
+      |                                                                    ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:489:35: warning: passing argument 4 of 'led_blink' from incompatible pointer type [-Wincompatible-pointer-types]
+  489 |        led_blink(LED1, 3, 150000, &current_brightness);
+      |                                   ^~~~~~~~~~~~~~~~~~~
+      |                                   |
+      |                                   uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:38:78: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   38 | void led_blink(uint8_t led, uint8_t cycle_num, uint32_t wait_time, uint16_t *brightness);
+      |                                                                    ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:495:36: warning: passing argument 4 of 'led_blink' from incompatible pointer type [-Wincompatible-pointer-types]
+  495 |         led_blink(LED1, 3, 150000, &current_brightness);
+      |                                    ^~~~~~~~~~~~~~~~~~~
+      |                                    |
+      |                                    uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:38:78: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   38 | void led_blink(uint8_t led, uint8_t cycle_num, uint32_t wait_time, uint16_t *brightness);
+      |                                                                    ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:509:16: warning: passing argument 1 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  509 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                ^~~~~
+      |                |
+      |                uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |               ~~~~~~~~^~~~~~
+../Src/app.c:509:23: warning: passing argument 2 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  509 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                       ^~~~~~~~~~~~~~~~
+      |                       |
+      |                       uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:39: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                               ~~~~~~~~^~~~~~~~~~~~~
+../Src/app.c:509:41: warning: passing argument 3 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  509 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                                         ^~~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:63: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                                                      ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:525:14: warning: passing argument 1 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  525 |     dim_leds(&leds, &leds_to_control, &current_brightness);
+      |              ^~~~~
+      |              |
+      |              uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |               ~~~~~~~~^~~~~~
+../Src/app.c:525:21: warning: passing argument 2 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  525 |     dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                     ^~~~~~~~~~~~~~~~
+      |                     |
+      |                     uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:39: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                               ~~~~~~~~^~~~~~~~~~~~~
+../Src/app.c:525:39: warning: passing argument 3 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  525 |     dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                                       ^~~~~~~~~~~~~~~~~~~
+      |                                       |
+      |                                       uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:63: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                                                      ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:530:34: warning: passing argument 4 of 'led_blink' from incompatible pointer type [-Wincompatible-pointer-types]
+  530 |       led_blink(LED1, 3, 150000, &current_brightness);
+      |                                  ^~~~~~~~~~~~~~~~~~~
+      |                                  |
+      |                                  uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:38:78: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   38 | void led_blink(uint8_t led, uint8_t cycle_num, uint32_t wait_time, uint16_t *brightness);
+      |                                                                    ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:539:16: warning: passing argument 1 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  539 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                ^~~~~
+      |                |
+      |                uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |               ~~~~~~~~^~~~~~
+../Src/app.c:539:23: warning: passing argument 2 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  539 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                       ^~~~~~~~~~~~~~~~
+      |                       |
+      |                       uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:39: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                               ~~~~~~~~^~~~~~~~~~~~~
+../Src/app.c:539:41: warning: passing argument 3 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  539 |       dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                                         ^~~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:63: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                                                      ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:543:84: warning: passing argument 5 of 'led_logic_handler' from incompatible pointer type [-Wincompatible-pointer-types]
+  543 |       led_to_glow = led_logic_handler(bat_soc, plugAction, power_direction, false, &leds_to_control);
+      |                                                                                    ^~~~~~~~~~~~~~~~
+      |                                                                                    |
+      |                                                                                    uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:33:113: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   33 | uint8_t led_logic_handler(uint8_t battery_soc, uint8_t plug_action, uint8_t pwr_direction, bool knock, uint8_t* active_leds);
+      |                                                                                                        ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:545:21: warning: passing argument 1 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  545 |       brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                     ^~~~~
+      |                     |
+      |                     uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:29: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                    ~~~~~~~~~^~~~
+../Src/app.c:545:28: warning: passing argument 2 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  545 |       brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                            ^~~~~~~~~~~~~~~~
+      |                            |
+      |                            uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:44: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                                   ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:545:46: warning: passing argument 3 of 'brighten_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  545 |       brighten_leds(&leds, &leds_to_control, &current_brightness);
+      |                                              ^~~~~~~~~~~~~~~~~~~
+      |                                              |
+      |                                              uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:41:67: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   41 | void brighten_leds(uint8_t *leds, uint8_t *active_leds, uint16_t *brightness);
+      |                                                         ~~~~~~~~~~^~~~~~~~~~
+../Src/app.c:556:14: warning: passing argument 1 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  556 |     dim_leds(&leds, &leds_to_control, &current_brightness);
+      |              ^~~~~
+      |              |
+      |              uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:23: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |               ~~~~~~~~^~~~~~
+../Src/app.c:556:21: warning: passing argument 2 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  556 |     dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                     ^~~~~~~~~~~~~~~~
+      |                     |
+      |                     uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:39: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                               ~~~~~~~~^~~~~~~~~~~~~
+../Src/app.c:556:39: warning: passing argument 3 of 'dim_leds' from incompatible pointer type [-Wincompatible-pointer-types]
+  556 |     dim_leds(&leds, &leds_to_control, &current_brightness);
+      |                                       ^~~~~~~~~~~~~~~~~~~
+      |                                       |
+      |                                       uint16_t (*)[3] {aka short unsigned int (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:40:63: note: expected 'uint16_t *' {aka 'short unsigned int *'} but argument is of type 'uint16_t (*)[3]' {aka 'short unsigned int (*)[3]'}
+   40 | void dim_leds(uint8_t leds[], uint8_t active_leds[], uint16_t brightness[]);
+      |                                                      ~~~~~~~~~^~~~~~~~~~~~
+../Src/app.c:386:16: warning: variable 'battery_voltage' set but not used [-Wunused-but-set-variable]
+  386 |  __vo uint16_t battery_voltage = 0, battery_current = 0xFFFF;
+      |                ^~~~~~~~~~~~~~~
+../Src/app.c:384:16: warning: unused variable 'brightness_val' [-Wunused-variable]
+  384 |  __vo uint16_t brightness_val;
+      |                ^~~~~~~~~~~~~~
+../Src/app.c: In function 'EXTI4_15_IRQHandler':
+../Src/app.c:603:71: warning: passing argument 5 of 'led_logic_handler' from incompatible pointer type [-Wincompatible-pointer-types]
+  603 |      led_logic_handler(bat_soc, plugAction, power_direction, knocked, &leds_to_control);
+      |                                                                       ^~~~~~~~~~~~~~~~
+      |                                                                       |
+      |                                                                       uint8_t (*)[3] {aka unsigned char (*)[3]}
+In file included from ../Src/app.c:2:
+C:/Espresso/Firmware/volta/Volta_Firmware/volta_device/middleware/inc/initialise.h:33:113: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t (*)[3]' {aka 'unsigned char (*)[3]'}
+   33 | uint8_t led_logic_handler(uint8_t battery_soc, uint8_t plug_action, uint8_t pwr_direction, bool knock, uint8_t* active_leds);
+      |                                                                                                        ~~~~~~~~~^~~~~~~~~~~
+../Src/app.c:577:21: warning: variable 'knock_val' set but not used [-Wunused-but-set-variable]
+  577 |     uint8_t pd_val, knock_val;
+      |                     ^~~~~~~~~
+arm-none-eabi-gcc -o "volta_device.elf" @"objects.list"   -mcpu=cortex-m0 -T"C:\Espresso\Firmware\volta\Volta_Firmware\volta_device\STM32F030F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="volta_device.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: volta_device.elf
+ 
+arm-none-eabi-size   volta_device.elf 
+arm-none-eabi-objdump -h -S  volta_device.elf  > "volta_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  16260	    112	   3880	  20252	   4f1c	volta_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: volta_device.list
+ 
+15:17:43 **** Incremental Build of configuration Debug for project volta_device ****
+make -j8 all 
+arm-none-eabi-size   volta_device.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16260	    112	   3880	  20252	   4f1c	volta_device.elf
+Finished building: default.size.stdout
+ 
+16:57:05 **** Incremental Build of configuration Debug for project volta_device ****
+make -j8 all 
+arm-none-eabi-size   volta_device.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16260	    112	   3880	  20252	   4f1c	volta_device.elf
+Finished building: default.size.stdout
+ 

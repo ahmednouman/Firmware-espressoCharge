@@ -1,0 +1,340 @@
+#include <stdio.h>
+#include "initialise.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include <stdbool.h>
+
+uint8_t system_mode = APP_MODE;
+uint32_t SystemCoreClock = 8000000;
+
+void start_setup();
+void host_comms(void* parameters);
+void device_task(void* parameters);
+void UFP_task(void* parameters);
+void process_command(uint8_t* cmd_buf, uint8_t frame_len);
+void send_ok_msg();
+void process_binary_fw(uint8_t* cmd_buf, uint8_t frame_len);
+
+BatteryReport pbatReport;
+
+
+uint8_t msg[MSG_SIZE];
+uint8_t encMsg[20];
+uint8_t encDataLen;
+volatile uint8_t rx_buf[MSG_SIZE] = {-1};
+uint8_t rcv_len = 1;
+volatile uint8_t rxCount = 0;
+
+uint16_t patchSize = 0;
+
+void pd_restart_setup()
+{
+	delay(3000000);
+	pd_interrupt_clear_all(&I2C1Handle);
+	pd_interrupt_mask(&I2C1Handle);
+}
+
+
+
+int main(void)
+{
+
+
+	delay(1000000);
+	IO_Init();
+	I2c_Init();
+	USART1_Init();
+	pd_restart_setup();
+
+	Knock_Interrupt_Init();
+	PD_Interrupt_Init();
+//	chg_setup_charge_power(&I2C1Handle);
+
+//	get_bat_level(&I2C1Handle, &pbatReport);
+
+	pd_swap_to_UFP(&I2C1Handle);
+
+	plugAction = pd_get_plug_detect(&I2C1Handle);
+	if(plugAction == PD_PLUG_CONNECTED){
+		power_direction = pd_get_power_direction(&I2C1Handle);
+	}
+
+ 	TaskHandle_t hostComms_handle;
+    TaskHandle_t deviceTask_handle;
+
+ 	BaseType_t status;
+
+ 	status = xTaskCreate(host_comms, "Host_Comms", 120, NULL, 2, &hostComms_handle);
+    configASSERT(status == pdPASS);
+
+ 	status = xTaskCreate(device_task, "Device_Task", 20, NULL, 2, &deviceTask_handle);
+    configASSERT(status == pdPASS);
+
+     vTaskStartScheduler();
+
+	while(1)
+	{
+	}
+
+    return 0;
+}
+
+
+
+void host_comms(void* parameters)
+{
+    while (USART_ReceiveDataIT(&usart1_handle, &rx_buf[0], rcv_len) != USART_READY );
+	while(1)
+	{
+		if (rx_buf[0] != 0x00 && rx_buf[rxCount-1] == 0x00)
+		{
+			uint8_t length = rx_buf[0];
+			uint8_t cmd_buf[MSG_SIZE] = {0};
+			uint8_t cmd_frame_len = 0;
+			bool zeroOk = false;
+			bool processMsg = false;
+			for (uint8_t i = 0; i < rxCount; i++)
+			{
+				if (i < length && (zeroOk || rx_buf[i] != 0))
+				{
+					cmd_buf[i] = rx_buf[i];
+					cmd_frame_len++;
+					zeroOk = false;
+				}
+				else if (i == length && rx_buf[i] == 0)
+				{
+					processMsg = true;
+				}
+				else if (i == length && rx_buf[i] != 0)
+				{
+					zeroOk = true;
+					length += rx_buf[i];
+					cmd_frame_len++;
+				}
+				else
+				{
+					processMsg = false;
+				}
+
+			}
+			if (processMsg)
+			{
+				if(system_mode == APP_MODE){
+					process_command(cmd_buf, cmd_frame_len);
+				}else if(system_mode == PROGRAM_PD_MODE){
+					process_binary_fw(cmd_buf, cmd_frame_len);
+				}
+
+			}
+			memset(rx_buf, -1, MSG_SIZE);
+			rxCount = 0;
+
+		}
+		else if (rxCount != 0)
+		{
+			memset(rx_buf, -1, MSG_SIZE);
+			rxCount = 0;
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(100));
+		taskYIELD();
+	}
+}
+
+void process_command(uint8_t* cmd_buf, uint8_t frame_len)
+{
+	uint8_t temp, temp2;
+	if(cmd_buf[1] == 0xF2 && cmd_buf[2] == 0x02 && cmd_buf[3] == 0x01){
+		pd_swap_to_sink(&I2C1Handle);
+		power_direction = pd_get_power_direction(&I2C1Handle);
+		chg_setup_charge_power(&I2C1Handle);
+	}else if(cmd_buf[1] == 0xF2 && cmd_buf[2] == 0x02 && cmd_buf[3] == 0x02){
+		pd_swap_to_source(&I2C1Handle);
+		vTaskDelay(pdMS_TO_TICKS(1000));
+		pd_swap_to_UFP(&I2C1Handle);
+		power_direction = pd_get_power_direction(&I2C1Handle);
+	}else if(cmd_buf[1] == 0xF3 && cmd_buf[2] == 0x01 && cmd_buf[3] == 0x08){
+		msg[0] = FW_VERSION & 0xFF;
+		msg[1] = (FW_VERSION >> 8) & 0xFF;
+		msg[2] = (FW_VERSION >> 16) & 0xFF;
+		msg[3] = (FW_VERSION >> 24) & 0xFF;
+		encodeData(&msg[0], 4, &encMsg[0], &encDataLen);
+		temp = encDataLen;
+		temp2 = 0;
+		while(temp > 0){
+		    while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+			temp--;
+			temp2++;
+		}
+	}else if(cmd_buf[1] == 0xF3 && cmd_buf[2] == 0x05 && cmd_buf[3] == 0x10){
+		get_bat_report(&I2C1Handle, &pbatReport);
+		msg[0] = pbatReport.SOC;
+		msg[1] = pbatReport.SOH;
+		msg[2] = pbatReport.remainingCapacity[0];
+		msg[3] = pbatReport.remainingCapacity[1];
+		msg[4] = pbatReport.fullCapacity[0];
+		msg[5] = pbatReport.fullCapacity[1];
+		msg[6] = pbatReport.voltage[0];
+		msg[7] = pbatReport.voltage[1];
+		msg[8] = pbatReport.current[0];
+		msg[9] = pbatReport.current[1];
+		msg[10] = pbatReport.temperature[0];
+		msg[11] = pbatReport.temperature[1];
+		msg[12] = pbatReport.timeToEmpty[0];
+		msg[13] = pbatReport.timeToEmpty[1];
+		msg[14] = pbatReport.timeToFull[0];
+		msg[15] = pbatReport.timeToFull[1];
+		msg[16] = power_direction;
+		encodeData(&msg[0], 17, &encMsg[0], &encDataLen);
+		temp = encDataLen;
+		temp2 = 0;
+		while(temp > 0){
+		    while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+			temp--;
+			temp2++;
+		}
+	}else if(cmd_buf[1] == 0xF0 && cmd_buf[2] == 0x03){
+		patchSize = ( (cmd_buf[3] << 8) | (cmd_buf[4]) );
+		system_mode = PROGRAM_PD_MODE;
+		send_ok_msg();
+	}
+}
+
+void process_binary_fw(uint8_t* cmd_buf, uint8_t frame_len)
+{
+	pd_patch_eprom(&I2C1Handle, &cmd_buf[1], frame_len - 2);
+	patchSize = patchSize - (frame_len - 4);
+    if(patchSize == 0){
+    	send_ok_msg();
+    	uint8_t res = pd_reset(&I2C1Handle);
+    	if(res == 0x00){
+    		pd_restart_setup();
+    		pd_swap_to_UFP(&I2C1Handle);
+    		plugAction = pd_get_plug_detect(&I2C1Handle);
+    		if(plugAction == PD_PLUG_CONNECTED){
+    			power_direction = pd_get_power_direction(&I2C1Handle);
+    		}
+    		system_mode = APP_MODE;
+    	}
+    }
+	send_ok_msg();
+
+}
+
+void send_ok_msg()
+{
+	uint8_t temp, temp2;
+	msg[0] = 0x4F;
+	msg[1] = 0x4B;
+	encodeData(&msg[0], 2, &encMsg[0], &encDataLen);
+	temp = encDataLen;
+	temp2 = 0;
+	while(temp > 0){
+	    while( USART_SendDataIT(&usart1_handle, &encMsg[temp2], 1) != USART_READY);
+		temp--;
+		temp2++;
+	}
+}
+
+void device_task(void* parameters)
+{
+	uint8_t power_dir, plug;
+	uint16_t full_brightness = (0xFFFF * 10) / 100 ;
+	uint16_t brightness_val = 0;
+	while(1)
+	{
+		if(plugAction == PD_PLUG_CONNECTED){
+			if(power_direction == SOURCING)
+			{
+				brightness_val = 0;
+//				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, full_brightness);
+//				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, full_brightness);
+				setLED(TIM_CHANNEL_1, full_brightness);
+				setLED(TIM_CHANNEL_2, full_brightness);
+//				ledOnOff(LED0, ON);
+//				ledOnOff(LED1, ON);
+//				ledOnOff(LED2, OFF);
+			}else if (power_direction == SINKING)
+			{
+				setLED(TIM_CHANNEL_1, full_brightness);
+				setLED(TIM_CHANNEL_2, full_brightness);
+				if(brightness_val < full_brightness){
+					brightness_val += 10;
+				}else{
+					brightness_val -= 10;
+				}
+				setLED(TIM_CHANNEL_4, brightness_val);
+
+//				setLED(LED2);
+			}
+		}else
+		{
+			brightness_val = 0;
+			setLED(TIM_CHANNEL_1, 0);
+			setLED(TIM_CHANNEL_2, 0);
+			setLED(TIM_CHANNEL_4, 0);
+
+//			ledOnOff(LED0, OFF);
+//		    ledOnOff(LED1, OFF);
+//		    ledOnOff(LED2, OFF);
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(10));
+		taskYIELD();
+	}
+}
+
+void EXTI4_15_IRQHandler(void)
+{
+    uint8_t pd_val, knock_val;
+    pd_val = GPIO_ReadFromInputPin(GPIOA, PD_INTERRUPT);
+    knock_val = GPIO_ReadFromInputPin(GPIOA, KNOCK_INTERRUPT);
+    delay(100000);
+    if(pd_val == 0)
+    {
+    	GPIO_IRQHandling(PD_INTERRUPT);
+    	if(system_mode == APP_MODE){
+    		pd_IRQHandling(&I2C1Handle);
+    	}
+    }
+    if(knock_val == 1)
+    {
+    	GPIO_IRQHandling(KNOCK_INTERRUPT);
+    	knock_IRQHandling();
+    }
+
+    if(system_mode == PROGRAM_PD_MODE)
+    {
+    	GPIO_IRQHandling(PD_INTERRUPT);
+    	GPIO_IRQHandling(KNOCK_INTERRUPT);
+    }
+}
+
+void I2C1_IRQHandler(void)
+{
+	I2C_EV_IRQHandling(&I2C1Handle);
+}
+
+void USART1_IRQHandler(void)
+{
+	USART_IRQHandling(&usart1_handle);
+}
+
+void USART_ApplicationEventCallback( USART_Handle_t *pUSARTHandle,uint8_t ApEv)
+{
+   if(ApEv == USART_EVENT_RX_CMPLT)
+   {
+       rx_buf[rxCount++] = (uint8_t)(pUSARTHandle->pUSARTx->RDR & (uint8_t)0xFF);
+       if (rxCount >= MSG_SIZE)
+       {
+    	   rxCount = 0;
+       }
+       while (USART_ReceiveDataIT(&usart1_handle, &rx_buf[rxCount], rcv_len) != USART_READY );
+
+   }else if (ApEv == USART_EVENT_TX_CMPLT)
+   {
+
+   }
+}
+
+

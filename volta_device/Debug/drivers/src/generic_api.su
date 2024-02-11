@@ -1,0 +1,12 @@
+../drivers/src/generic_api.c:20:6:delay	8	static
+../drivers/src/generic_api.c:39:9:calculateXorChecksum	8	static
+../drivers/src/generic_api.c:49:6:encodeData	32	static
+../drivers/src/generic_api.c:82:6:int_to_str	40	static
+../drivers/src/generic_api.c:98:10:convertBufferTo32Bit	12	static
+../drivers/src/generic_api.c:112:6:uint8_to_str	24	static
+../drivers/src/generic_api.c:131:6:serial_log	8	static
+../drivers/src/generic_api.c:136:6:update_msg_and_log	32	static
+../drivers/src/generic_api.c:148:6:update_msg_and_log_with_byte	24	static
+../drivers/src/generic_api.c:159:6:msg_only_and_log	8	static
+../drivers/src/generic_api.c:165:6:suspend_systick_tim	0	static
+../drivers/src/generic_api.c:170:6:resume_systick_tim	0	static

@@ -1,0 +1,7 @@
+../drivers/src/stm32f030x4_gpio_driver.c:17:6:GPIO_Init_Base	24	static
+../drivers/src/stm32f030x4_gpio_driver.c:49:6:GPIO_enable_IT_trigger	0	static
+../drivers/src/stm32f030x4_gpio_driver.c:57:6:GPIO_PeriClockControl	0	static
+../drivers/src/stm32f030x4_gpio_driver.c:77:9:GPIO_ReadFromInputPin	0	static
+../drivers/src/stm32f030x4_gpio_driver.c:84:6:GPIO_IRQInterruptConfig	0	static
+../drivers/src/stm32f030x4_gpio_driver.c:102:6:GPIO_IRQPriorityConfig	0	static
+../drivers/src/stm32f030x4_gpio_driver.c:111:6:GPIO_IRQHandling	0	static
